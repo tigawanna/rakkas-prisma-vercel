@@ -33,7 +33,7 @@ export default createRequestHandler({
         // inject a script into the page's head to set the data-theme attribute before tha
         // page loads to avoid a flash of the old theme
         return `
-    <link rel="icon" href="/favicon.ico" data-rh="faviconIco">
+  
    <script>
       (function() {
         document.documentElement.setAttribute("data-theme", "${cookie_theme}");

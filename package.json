@@ -11,6 +11,7 @@
     "test:typecheck": "tsc -p tsconfig.json --noEmit",
     "test:format": "prettier --check --ignore-unknown src",
     "test:lint": "eslint . --ignore-pattern dist",
+    "prod-build": "prisma generate && prisma migrate deploy && rakkas build",
     "test:unit": "vitest run"
   },
   "devDependencies": {

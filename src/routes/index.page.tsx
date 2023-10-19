@@ -1,5 +1,5 @@
 import { Head, Page, useSSM, useSSQ } from "rakkasjs";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import {prisma } from "@/lib/db/prisma"
 
 const HomePage: Page = function HomePage({}) {
@@ -23,7 +23,7 @@ function createTodo(e:React.FormEvent<HTMLFormElement>){
 }
   return (
     <main>
-      {/* <Head
+      <Head
         title="Rakkas Prisma Vercel"
         description="Rakkasjs with Prisma + postgres deployed on  Vercel"
         faviconIco={{
@@ -31,7 +31,7 @@ function createTodo(e:React.FormEvent<HTMLFormElement>){
           rel: "icon",
           href: "/favicon.ico",
         }}
-      /> */}
+      />
       <h1>Hello world!</h1>
       <p>Welcome to the Rakkas demo page 💃</p>
       <p>
@@ -42,6 +42,7 @@ function createTodo(e:React.FormEvent<HTMLFormElement>){
         </a>
         .
       </p>
+      <Suspense fallback={<div>Loading...</div>}>
       {data?.map((item) => {
         return (
           <div key={item.id}>
@@ -50,6 +51,7 @@ function createTodo(e:React.FormEvent<HTMLFormElement>){
           </div>
         );
       })}
+      </Suspense>
       <div>
         <form className="" onSubmit={createTodo}>
           <div>
