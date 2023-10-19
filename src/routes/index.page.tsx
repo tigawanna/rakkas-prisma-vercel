@@ -4,9 +4,11 @@ import {prisma } from "@/lib/db/prisma"
 
 const HomePage: Page = function HomePage({}) {
   const [input,setInput]=useState({name:"",description:""});
-  const {data} = useSSQ(async(ctx)=>{
-    return await prisma?.stuff.findMany();
-  })
+
+  // const {data} = useSSQ(async(ctx)=>{
+  //   return await prisma?.stuff.findMany();
+  // })
+
   const mutation = useSSM(async(ctx,vars:{name:string,description:string})=>{
     return await prisma?.stuff.create({
       data:{
@@ -42,7 +44,7 @@ function createTodo(e:React.FormEvent<HTMLFormElement>){
         </a>
         .
       </p>
-      <Suspense fallback={<div>Loading...</div>}>
+      {/* <Suspense fallback={<div>Loading...</div>}>
       {data?.map((item) => {
         return (
           <div key={item.id}>
@@ -51,7 +53,7 @@ function createTodo(e:React.FormEvent<HTMLFormElement>){
           </div>
         );
       })}
-      </Suspense>
+      </Suspense> */}
       <div>
         <form className="" onSubmit={createTodo}>
           <div>
