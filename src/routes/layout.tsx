@@ -10,15 +10,7 @@ const MainLayout: Layout = ({ children }) => (
     {/* Rakkas relies on react-helmet-async for managing the document head */}
     {/* See their documentation: https://github.com/staylor/react-helmet-async#readme */}
     {/* <Head title="Rakkas Demo App" /> */}
-<Head
-  title="Rakkas Prisma Vercel"
-  description="Rakkasjs with Prisma + postgres deployed on  Vercel"
-  faviconIco={{
-    tagName: "link",
-    rel: "icon",
-    href: "/favicon.ico",
-  }}
-  />
+
     <header className={css.header}>
       {/* <Link /> is like <a /> but it provides client-side navigation without full page reload. */}
       <Link className={css.logo} href="/">

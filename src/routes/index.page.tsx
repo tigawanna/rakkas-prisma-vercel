@@ -1,4 +1,4 @@
-import { Page, useSSM, useSSQ } from "rakkasjs";
+import { Head, Page, useSSM, useSSQ } from "rakkasjs";
 import { useState } from "react";
 import {prisma } from "@/lib/db/prisma"
 
@@ -23,6 +23,15 @@ function createTodo(e:React.FormEvent<HTMLFormElement>){
 }
   return (
     <main>
+      {/* <Head
+        title="Rakkas Prisma Vercel"
+        description="Rakkasjs with Prisma + postgres deployed on  Vercel"
+        faviconIco={{
+          tagName: "link",
+          rel: "icon",
+          href: "/favicon.ico",
+        }}
+      /> */}
       <h1>Hello world!</h1>
       <p>Welcome to the Rakkas demo page 💃</p>
       <p>
@@ -46,7 +55,7 @@ function createTodo(e:React.FormEvent<HTMLFormElement>){
           <div>
             <label htmlFor="name">Name</label>
             <input
-            id="name"
+              id="name"
               type="text"
               value={input.name}
               onChange={(e) => {
@@ -64,12 +73,15 @@ function createTodo(e:React.FormEvent<HTMLFormElement>){
               }}
             />
           </div>
-          <button type="submit">{mutation.isLoading?"submitting...":"submit"}</button>
-          {mutation?.error as any && <p>{JSON.stringify(mutation?.error as any??{},null,2)}</p>}
+          <button type="submit">
+            {mutation.isLoading ? "submitting..." : "submit"}
+          </button>
+          {(mutation?.error as any) && (
+            <p>{JSON.stringify((mutation?.error as any) ?? {}, null, 2)}</p>
+          )}
           {mutation.isSuccess && <p>Success</p>}
         </form>
       </div>
-
     </main>
   );
 };
