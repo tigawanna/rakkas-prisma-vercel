@@ -6,11 +6,13 @@ const HomePage: Page = function HomePage({}) {
   const [input,setInput]=useState({name:"",description:""});
 
 
-  const {data} = useSSQ(async(ctx)=>{
+  const query = useSSQ(async(ctx)=>{
     return prisma?.stuff.findMany().catch((e)=>{
       console.log("error fetching === ",e)
     });
   })
+
+  console.log({query})
 
   const mutation = useSSM(async(ctx,vars:{name:string,description:string})=>{
     return prisma?.stuff.create({
