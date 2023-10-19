@@ -1,18 +1,13 @@
 import { Head, Page, useSSM, useSSQ } from "rakkasjs";
 import { Suspense, useState } from "react";
 import {prisma } from "@/lib/db/prisma"
+import { List } from "./List";
 
 const HomePage: Page = function HomePage({}) {
   const [input,setInput]=useState({name:"",description:""});
 
 
-  const query = useSSQ(async(ctx)=>{
-    return prisma?.stuff.findMany().catch((e)=>{
-      console.log("error fetching === ",e)
-    });
-  })
 
-  console.log({query})
 
   const mutation = useSSM(async(ctx,vars:{name:string,description:string})=>{
     return prisma?.stuff.create({
@@ -51,16 +46,9 @@ function createTodo(e:React.FormEvent<HTMLFormElement>){
         </a>
         .
       </p>
-      {/* <Suspense fallback={<div>Loading...</div>}>
-      {data?.map((item) => {
-        return (
-          <div key={item.id}>
-            <h2>{item.name}</h2>
-            <p>{item.description}</p>
-          </div>
-        );
-      })}
-      </Suspense> */}
+
+
+
       <div>
         <form className="" onSubmit={createTodo}>
           <div>
@@ -92,6 +80,9 @@ function createTodo(e:React.FormEvent<HTMLFormElement>){
           )}
           {mutation.isSuccess && <p>Success</p>}
         </form>
+
+
+        <List/>
       </div>
     </main>
   );
