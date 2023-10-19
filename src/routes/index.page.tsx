@@ -1,6 +1,26 @@
-import { Page } from "rakkasjs";
+import { Page, useSSM, useSSQ } from "rakkasjs";
+import { useState } from "react";
+import {prisma } from "@/lib/db/prisma"
 
-const HomePage: Page = function HomePage() {
+const HomePage: Page = function HomePage({}) {
+  const [input,setInput]=useState({name:"",description:""});
+  const {data} = useSSQ(async(ctx)=>{
+    return await prisma?.stuff.findMany();
+  })
+  const mutation = useSSM(async(ctx,vars:{name:string,description:string})=>{
+    return await prisma?.stuff.create({
+      data:{
+        name:vars?.name,
+        description:vars?.description
+      }
+    })
+  })
+function createTodo(e:React.FormEvent<HTMLFormElement>){
+  e.preventDefault();
+  if(mutation.isLoading) return
+  if(input.name.length<5||input.description.length<10) return
+  mutation.mutate({name:input.name,description:input.description})
+}
   return (
     <main>
       <h1>Hello world!</h1>
@@ -13,10 +33,43 @@ const HomePage: Page = function HomePage() {
         </a>
         .
       </p>
-      <p>
-        You may also check the little <a href="/todo">todo application</a> to
-        learn about API endpoints and data fetching.
-      </p>
+      {data?.map((item) => {
+        return (
+          <div key={item.id}>
+            <h2>{item.name}</h2>
+            <p>{item.description}</p>
+          </div>
+        );
+      })}
+      <div>
+        <form className="" onSubmit={createTodo}>
+          <div>
+            <label htmlFor="name">Name</label>
+            <input
+            id="name"
+              type="text"
+              value={input.name}
+              onChange={(e) => {
+                setInput({ ...input, name: e.target.value });
+              }}
+            />
+          </div>
+          <div>
+            <label htmlFor="descrition">Description</label>
+            <textarea
+              id="descrition"
+              value={input.description}
+              onChange={(e) => {
+                setInput({ ...input, description: e.target.value });
+              }}
+            />
+          </div>
+          <button type="submit">{mutation.isLoading?"submitting...":"submit"}</button>
+          {mutation?.error as any && <p>{JSON.stringify(mutation?.error as any??{},null,2)}</p>}
+          {mutation.isSuccess && <p>Success</p>}
+        </form>
+      </div>
+
     </main>
   );
 };
