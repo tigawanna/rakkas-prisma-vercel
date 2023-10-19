@@ -7,13 +7,13 @@ const HomePage: Page = function HomePage({}) {
 
 
   const {data} = useSSQ(async(ctx)=>{
-    return await prisma?.stuff.findMany().catch((e)=>{
+    return prisma?.stuff.findMany().catch((e)=>{
       console.log("error fetching === ",e)
     });
   })
 
   const mutation = useSSM(async(ctx,vars:{name:string,description:string})=>{
-    return await prisma?.stuff.create({
+    return prisma?.stuff.create({
       data:{
         name:vars?.name,
         description:vars?.description
@@ -49,7 +49,7 @@ function createTodo(e:React.FormEvent<HTMLFormElement>){
         </a>
         .
       </p>
-      <Suspense fallback={<div>Loading...</div>}>
+      {/* <Suspense fallback={<div>Loading...</div>}>
       {data?.map((item) => {
         return (
           <div key={item.id}>
@@ -58,7 +58,7 @@ function createTodo(e:React.FormEvent<HTMLFormElement>){
           </div>
         );
       })}
-      </Suspense>
+      </Suspense> */}
       <div>
         <form className="" onSubmit={createTodo}>
           <div>
