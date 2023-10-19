@@ -9,6 +9,8 @@ import {
 
 import { createTodo, readAllTodos } from "src/crud";
 
+
+
 export default function TodoPage() {
   const { data, refetch } = useServerSideQuery(readAllTodos, {
     refetchOnWindowFocus: true,
